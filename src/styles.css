@@ -1,0 +1,157 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-blood: var(--blood);
+  --color-blood-glow: var(--blood-glow);
+  --color-ember: var(--ember);
+  --color-parchment: var(--parchment);
+  --color-fog: var(--fog);
+  --font-display: "Cinzel", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Blood Moon palette */
+  --background: oklch(0.14 0.012 25);
+  --foreground: oklch(0.95 0.018 80);
+  --card: oklch(0.19 0.022 22);
+  --card-foreground: oklch(0.95 0.018 80);
+  --popover: oklch(0.17 0.02 22);
+  --popover-foreground: oklch(0.95 0.018 80);
+  --primary: oklch(0.62 0.22 24);          /* blood red #e63946-ish */
+  --primary-foreground: oklch(0.98 0.01 80);
+  --secondary: oklch(0.24 0.025 30);
+  --secondary-foreground: oklch(0.95 0.018 80);
+  --muted: oklch(0.22 0.02 25);
+  --muted-foreground: oklch(0.7 0.025 60);
+  --accent: oklch(0.78 0.15 65);           /* amber #f4a261 */
+  --accent-foreground: oklch(0.15 0.02 30);
+  --destructive: oklch(0.58 0.24 25);
+  --destructive-foreground: oklch(0.98 0.01 80);
+  --border: oklch(0.28 0.03 25);
+  --input: oklch(0.26 0.025 25);
+  --ring: oklch(0.62 0.22 24);
+
+  --blood: oklch(0.62 0.22 24);
+  --blood-glow: oklch(0.55 0.26 22);
+  --ember: oklch(0.78 0.15 65);
+  --parchment: oklch(0.94 0.04 85);
+  --fog: oklch(0.42 0.015 30);
+}
+
+.dark {
+  --background: oklch(0.14 0.012 25);
+  --foreground: oklch(0.95 0.018 80);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Atmospheric background */
+@utility bg-blood-scene {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse at top, color-mix(in oklab, var(--blood) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse at bottom, color-mix(in oklab, var(--ember) 6%, transparent), transparent 60%),
+    radial-gradient(circle at 50% -10%, color-mix(in oklab, var(--blood-glow) 22%, transparent), transparent 40%);
+}
+
+@utility text-blood-glow {
+  color: var(--parchment);
+  text-shadow:
+    0 0 18px color-mix(in oklab, var(--blood) 60%, transparent),
+    0 0 4px color-mix(in oklab, var(--blood) 80%, transparent);
+}
+
+@utility card-occult {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--card) 96%, transparent), color-mix(in oklab, var(--background) 92%, transparent)),
+    radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--blood) 18%, transparent), transparent 60%);
+  border: 1px solid color-mix(in oklab, var(--blood) 35%, var(--border));
+  box-shadow:
+    0 30px 80px -30px color-mix(in oklab, var(--blood) 50%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--ember) 20%, transparent);
+}
+
+@utility btn-blood {
+  background: linear-gradient(180deg, var(--blood), color-mix(in oklab, var(--blood) 70%, black));
+  color: var(--parchment);
+  border: 1px solid color-mix(in oklab, var(--blood) 60%, white 10%);
+  box-shadow:
+    0 8px 30px -8px color-mix(in oklab, var(--blood) 70%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--ember) 30%, transparent);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+  &:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  &:active { transform: translateY(0); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.4); }
+}
+
+@utility btn-ghost-blood {
+  background: transparent;
+  color: var(--parchment);
+  border: 1px solid color-mix(in oklab, var(--blood) 40%, var(--border));
+  transition: all 120ms ease;
+  &:hover { background: color-mix(in oklab, var(--blood) 12%, transparent); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--blood) 50%, transparent); }
+  50% { box-shadow: 0 0 40px 6px color-mix(in oklab, var(--blood) 35%, transparent); }
+}
+@utility animate-pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.85; }
+  55% { opacity: 1; }
+}
+@utility animate-flicker {
+  animation: flicker 4s ease-in-out infinite; }
+#lovable-badge {
+   display:none !important;
+}
+
